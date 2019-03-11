@@ -5,16 +5,26 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Set default API response
+   /**
+     * @swagger
+     *
+     * /orders:
+     *   get:
+     *     description: get list of Orders
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: orders
+     */
 router.get('/', function (req, res) {
     res.json({
         status: '200',
-        message: 'Carts API',
+        message: 'Orders API',
     });
     console.log("logging /");
 });
@@ -22,28 +32,21 @@ router.get('/', function (req, res) {
 // Import product controller
 var controller = require('./controller');
 
-// Swagger routes
-router.use('/', swaggerUi.serve);
-router.use('/', swaggerUi.setup(swaggerDocument));
-
-// Carts routes
-router.route('/carts')
+router.route('/orders')
     .get(controller.index)
     .post(controller.new);
 
-router.route('/carts/:cart_id')
+router.route('/orders/:order_id')
     .get(controller.view)
     .patch(controller.update)
     .put(controller.update)
     .delete(controller.delete);
 
-router.route('/carts/:cart_id/items')
+router.route('/orders/:order_id/items')
     .post(controller.newItem)
     .get(controller.getItems)
-//   .putItem(controller.update)
-//    .deleteItem(controller.delete)
 
-router.route('/carts/:cart_id/items/:itemIndex')
+router.route('/orders/:order_id/items/:itemIndex')
     .get(controller.viewItem)
 
 // Export API routes

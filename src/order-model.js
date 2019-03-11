@@ -1,10 +1,10 @@
-// cart-model.js
+// order-model.js
 var mongoose = require('mongoose');
 // Setup schema
 
 var SchemaTypes = mongoose.Schema.Types;
 
-var cartSchema = mongoose.Schema({
+var orderSchema = mongoose.Schema({
     
     items: [{
         //_id: Number,
@@ -29,9 +29,9 @@ var cartSchema = mongoose.Schema({
     }
 });
 
-// Export Cart model
-var Cart = module.exports = mongoose.model('cart', cartSchema);
+// Export Order model
+var Order = module.exports = mongoose.model('order', orderSchema);
 
 module.exports.get = function (callback, limit) {
-    Cart.find(callback).limit(limit);
+    Order.find(callback).limit(limit);
 };

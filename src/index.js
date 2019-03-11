@@ -8,11 +8,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const config = require('./config.js');
-//console.log(config.get('db.connectionString'));
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpecs = require('./swaggerSpecs.js');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 app.use(bodyParser.urlencoded({extended:true}));
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 
 //mongoose.connect('mongodb://localhost/carts');
 mongoose.connect(config.get('db.connectionString'));
@@ -21,6 +23,8 @@ var db = mongoose.connection;
 
 //import routes
 let apiRoutes = require('./routes')
+
+// Orders routes
 app.use('/api', apiRoutes);
 
 // Setup server port
@@ -28,9 +32,9 @@ app.use('/api', apiRoutes);
 var port = config.get('server.port')
 
 // Send message for default URL
-app.get('/', (req, res) => res.send('Carts API'));
+app.get('/', (req, res) => res.send('Orders API'));
 
 // Launch app to listen to specified port
 app.listen(port, function () {
-     console.log("running carts api on " + port);
+     console.log("running orders api on " + port);
 });
