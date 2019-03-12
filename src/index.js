@@ -14,6 +14,13 @@ const swaggerSpecs = require('./swaggerSpecs.js');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
+app.get('/api-docs.json', (req, res) => {
+     res.setHeader('Content-Type', 'application/json');
+     res.send(swaggerSpecs);
+   });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+
 app.use(bodyParser.urlencoded({extended:true}));
 
 //mongoose.connect('mongodb://localhost/carts');
@@ -22,7 +29,7 @@ mongoose.connect(config.get('db.connectionString'));
 var db = mongoose.connection;
 
 //import routes
-let apiRoutes = require('./routes')
+let apiRoutes = require('./routes.js')
 
 // Orders routes
 app.use('/api', apiRoutes);

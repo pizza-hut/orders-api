@@ -9,18 +9,62 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-   /**
-     * @swagger
-     *
-     * /orders:
-     *   get:
-     *     description: get list of Orders
-     *     produces:
-     *       - application/json
-     *     responses:
-     *       200:
-     *         description: orders
-     */
+/**
+ * @swagger
+ *
+ * definitions:
+ *   order:
+ *     type: object
+ *     properties:
+ *       items:
+ *         type: array
+ *         items:
+ *           type: object
+ *           properties:
+ *             productId:
+ *               type: string
+ *             productLink:
+ *               type: string,
+ *             productOptionValues:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   option:
+ *                     type: string
+ *                   value:
+ *                     type: string            
+ *             quantity:
+ *               type: integer
+ *             price:
+ *               type: number
+ *               format: double
+ *             subTotal:
+ *               type: number
+ *               format: double     
+ *       totalCost:
+ *         type: number
+ *         format: double 
+ *       createdDate:
+ *         type: string
+ *         format: date-time     
+ */
+
+
+
+/**
+ * @swagger
+ *
+ * /:
+ *   get:
+ *     description: testing endpoint
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: ok response
+ *         
+ */
 router.get('/', function (req, res) {
     res.json({
         status: '200',
@@ -32,6 +76,20 @@ router.get('/', function (req, res) {
 // Import product controller
 var controller = require('./controller');
 
+   /**
+     * @swagger
+     *
+     * /api/orders:
+     *   get:
+     *     description: get list of orders
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: ok response
+     *         schema:
+     *           $ref: '#/definitions/order'
+     */
 router.route('/orders')
     .get(controller.index)
     .post(controller.new);
