@@ -20,7 +20,7 @@ exports.index = function (req, res) {
     });
 };
 
-// Handle create product actions
+// Handle create order actions
 exports.new = function (req, res) {
     var order = new Order();
     console.log("requestor:" + req.body.requestor);
@@ -30,6 +30,7 @@ exports.new = function (req, res) {
 
 // save the product and check for errors
     order.save(function (err) {
+        console.log('order create request');
         if (err) res.json(err);
         res.json({
             status: '201',
