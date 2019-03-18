@@ -12,6 +12,8 @@ const config = require('./config.js');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swaggerSpecs.js');
 
+app.use(bodyParser.json());
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 app.get('/api-docs.json', (req, res) => {

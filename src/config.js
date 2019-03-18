@@ -12,7 +12,7 @@ var config = convict ({
         port: {
             doc: "node server port number",
             format: "port",
-            default: 9090,
+            default: 9191,
             env: "PORT",
             arg: "port"
         }
@@ -29,7 +29,7 @@ var config = convict ({
 });
 
 var env = config.get('env');
-config.loadFile('./config/' + env + '.json');
+config.loadFile('../config/' + env + '.json');
 
 config.validate({allowed: 'strict'});
 module.exports = config;
