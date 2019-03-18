@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var SchemaTypes = mongoose.Schema.Types;
 
 var orderSchema = mongoose.Schema({
-    
+    orderId: String,
     items: [{
         //_id: Number,
         productId: String,
@@ -24,6 +24,10 @@ var orderSchema = mongoose.Schema({
     },
     
     createdDate: {
+        type: Date,
+        default: Date.now  
+    },
+    lastModifiedDate: {
         type: Date,
         default: Date.now  
     }
