@@ -15,6 +15,11 @@ var config = convict ({
             default: 9191,
             env: "PORT",
             arg: "port"
+        },
+        hostName: {
+            doc: "server hostname",
+            format: "*",
+            default: "localhost"
         }
     },
 
@@ -25,11 +30,18 @@ var config = convict ({
             default: "mongodb://localhost/carts"
         }
 
+    },
+
+    order: {
+        url: {
+            doc: "order URL",
+            format: "*"            
+        }        
     }
 });
 
 var env = config.get('env');
-config.loadFile('../config/' + env + '.json');
+config.loadFile('config/' + env + '.json');
 
 config.validate({allowed: 'strict'});
 module.exports = config;

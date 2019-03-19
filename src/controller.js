@@ -2,6 +2,9 @@
 // Import order model
 Order = require('./order-model');
 
+const config = require('./config');
+const uuid = require('uuid/v5');
+
 // Handle index actionss
 exports.index = function (req, res) {
     console.log("orders api index");
@@ -26,16 +29,20 @@ exports.new = function (req, res) {
     console.log("requestor:" + req.body.requestor);
     console.log("JSON:" + JSON.stringify(req.body.items));
     
+    order.orderId = uuid(config.get('server.hostName'), uuid.DNS);
+    console.log('orderId ' + order.orderId);
+    
     order.items = req.body.items.slice();
+    order.totalCost = req.body.totalCost;
+    console.log('order ' + order);    
 
-// save the product and check for errors
+// save the order and check for errors
     order.save(function (err) {
-        console.log('order create request');
         if (err) res.json(err);
         res.json({
             status: '201',
             message: 'New order created!',
-            data: order
+            data: order.orderId
         });
     });
 };

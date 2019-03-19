@@ -5,9 +5,10 @@ var mongoose = require('mongoose');
 var SchemaTypes = mongoose.Schema.Types;
 
 var orderSchema = mongoose.Schema({
-    orderId: String,
+    orderId: {
+        type: String
+    },
     items: [{
-        //_id: Number,
         productId: String,
         productLink: String,
         productOptionValues: [{
@@ -17,12 +18,10 @@ var orderSchema = mongoose.Schema({
         quantity: Number,
         price: Number,
         subTotal: Number         
-    }],    
-                                      
+    }],                                      
     totalCost: {
         type: Number
-    },
-    
+    },    
     createdDate: {
         type: Date,
         default: Date.now  
